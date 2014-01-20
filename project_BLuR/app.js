@@ -1,41 +1,49 @@
 
-/**
- * Module dependencies.
- */
-
-var express = require('express');
-var routes = require('./routes');
-var http = require('http');
+// dependencies
 var path = require('path');
+var express = require('express');
+var http = require('http');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
+// main config
 var app = express();
-
-// all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.favicon());
-//TODO enable this for loging app.use(express.logger('dev'));
+app.set('view options', { layout: false });
+//app.use(express.logger());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(express.cookieParser('your secret here'));
+app.use(express.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
-
-app.get('/', routes.index);
-
-app.post('/login', function(req, res) {
-	//TODO do something with this data
-    var username = req.body.username;
-    var password = req.body.password;
-    console.log(req.body);
+app.configure('development', function(){
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+app.configure('production', function(){
+    app.use(express.errorHandler());
+});
+
+// passport config
+var Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+// mongoose
+mongoose.connect('mongodb://localhost/project_BLuR_user_accounts');
+
+// routes
+require('./routes')(app);
+
+app.listen(app.get('port'), function(){
+  console.log(("Express server listening on port " + app.get('port')))
 });
