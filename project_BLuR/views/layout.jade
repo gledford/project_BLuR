@@ -1,6 +1,9 @@
-!!! 5
-  html(lang='en')  
-    head  
-  title= title  
-  body!= body  
-    div#navigation!= partial('navigation.jade')  
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    <!-- Custom styles for this template -->
+    link(rel='stylesheet', href='/stylesheets/starter-template.css')
+  body
+    block content

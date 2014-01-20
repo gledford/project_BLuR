@@ -1,16 +1,36 @@
+
+/**
+ * Module dependencies.
+ */
+
 var express = require('express');
+var routes = require('./routes');
+var user = require('./routes/user');
+var http = require('http');
+var path = require('path');
+
 var app = express();
 
-//set path to the views (template) directory
-app.set('views', __dirname + '/views');
+// all environments
+app.set('port', process.env.PORT || 8888); //3000
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
 
-//set path to static files
-app.use(express.static(__dirname + '/../public'));
+// development only
+if ('development' == app.get('env')) {
+  app.use(express.errorHandler());
+}
 
-//handle GET requests on /
-app.get('/', function(req, res){
-	res.render('index.jade', {title: 'My Test Link'});
-	});
+app.get('/', routes.index);
+app.get('/users', user.list);
 
-//listen on localhost:3000
-app.listen(3000);
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
