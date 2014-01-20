@@ -1,25 +1,13 @@
-doctype html
-html
-  head
-    title= title
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(href='/css/bootstrap.min.css', rel='stylesheet', media='screen')
-  body
-  .container              
-    h1 Say something meaningful here.
-    p.lead Say something worthwhile here.
-    a(href="/") Go home
-    br
-    a(href="/ping") Ping
-    br
-    br
-    if (!user)
-      a(href="/login") Login
-      br
-      a(href="/register") Register
-    if (user)
-      p You are currently logged in as #{user.username}
-      a(href="/logout") Logout
-
-  script(src='http://code.jquery.com/jquery.js')
-  script(src='js/bootstrap.min.js')
+extends layout
+ 
+block content
+  h1 Project_BLuR
+  
+  div.top
+    form.form-horizontal(action='/login', method="post", id="loginForm")
+      label Username
+      input(id="username", type="text", name="username", placeholder="Enter your username")
+      label Password
+      input(id="password", type="password", name="password")
+      input.btn(type="submit", value="Log In")
+  div.footer

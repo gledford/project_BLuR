@@ -2,26 +2,20 @@
   "name": "project_BLuR",
   "description": "project_BLuR",
   "version": "0.1.0",
-  "main": "app.js"
+  "dependencies": {
+    "express": "3.4.7",
+    "jade": "*"
+  },
   "scripts": {
-	"start": "node app.js",
-    "test": "make test"
+    "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
   },
   "repository": "",
   "keywords": [
     "node.js",
-    "express",
     "eclipse",
-    "nodeclipse",
-    "bootstrap"
+    "nodeclipse"
   ],
   "author": "",
   "license": "MIT",
-  "readmeFilename": "README.md",
-  "dependencies": {
-	  "express": "3.4.7",
-	  "jade": "*",
-	  "passport": "*",
-	  "mongoose": "*"
-  }
+  "readmeFilename": "README.md"
 }
