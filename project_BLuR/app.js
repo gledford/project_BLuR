@@ -17,7 +17,7 @@ app.set('view options', { layout: false });
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser('project_BLuR'));
 app.use(express.session());
 app.use(passport.initialize());
 app.use(passport.session());
