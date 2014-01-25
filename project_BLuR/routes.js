@@ -4,12 +4,12 @@ var Account = require('./models/account');
 module.exports = function (app) {
     
   app.get('/', function (req, res) {
-      res.render('index.html', { user : req.user });
+      res.render('index', { user : req.user });
   });
 
   app.get('/register', function(req, res) {
     var defaultData = { errorString : "", username : "", firstname : "", lastname : "", email : "" };
-    res.render('register.html', defaultData);
+    res.render('register', defaultData);
   });
 
   app.post('/register', function(req, res) {
@@ -33,7 +33,7 @@ module.exports = function (app) {
           }
 
           passport.authenticate('local')(req, res, function () {
-            res.redirect('index.html');
+            res.redirect('index');
           });
       });
     }
@@ -42,12 +42,12 @@ module.exports = function (app) {
       var error = "Your passwords do not match. Please enter the same password";
       var inputData = { errorString : error, username : req.body.username, firstname : req.body.firstname, lastname : req.body.lastname,
         email : req.body.email };
-      res.render('register.html', inputData);
+      res.render('register', inputData);
     }
   });
 
   app.get('/login', function(req, res) {
-      res.render('login.html', { user : req.user });
+      res.render('login', { user : req.user });
   });
 
   app.post('/login', passport.authenticate('local'), function(req, res) {
