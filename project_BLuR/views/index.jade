@@ -19,7 +19,8 @@ block content
           li
            if (!user)
             a(href="/login") Login
-            br
+          li
+           if (!user)
             a(href="/register") Register
            if (user)
             p You are currently logged in as #{user.username}
